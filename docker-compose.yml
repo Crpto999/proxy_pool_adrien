@@ -17,7 +17,7 @@ services:
       - ./mihomo/ui:/app/mihomo/ui  # 映射配置目录
     networks:
       proxy_net:
-        ipv4_address: 172.16.99.1
+        ipv4_address: 172.18.99.1
 
 networks:
   proxy_net:
@@ -25,5 +25,5 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.99.0/24
-          gateway: 172.16.99.254
+        - subnet: 172.18.99.0/24
+          gateway: 172.18.99.254
