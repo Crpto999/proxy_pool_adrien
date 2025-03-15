@@ -16,14 +16,14 @@ services:
       - ./mihomo/config:/app/mihomo/config  # 映射配置目录
       - ./mihomo/ui:/app/mihomo/ui  # 映射配置目录
     networks:
-      proxy:
+      proxy_net:
         ipv4_address: 172.16.99.1
 
 networks:
-  proxy:
+  proxy_net:
+    name: proxy_pool_network 
     driver: bridge
     ipam:
-      driver: default
       config:
         - subnet: 172.16.99.0/24
           gateway: 172.16.99.254
