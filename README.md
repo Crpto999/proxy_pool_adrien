@@ -1,4 +1,3 @@
-# Proxy Pool Docker 部署与使用指南
 
 ## 项目介绍
 
@@ -23,6 +22,8 @@
 
 ```bash
 git clone https://github.com/Crpto999/proxy_pool_adrien.git
+#国内服务器使用
+git clone https://gitclone.com/github.com/Crpto999/proxy_pool_adrien.git
 cd proxy_pool_adrien
 ```
 
@@ -63,10 +64,12 @@ CLASH_META_SECRET=
 
 ```bash
 # 构建容器
-docker-compose build
 
+docker-compose build
+#sudo docker-compose build
 # 启动容器
 docker-compose up -d
+#sudo docker-compose up -d
 ```
 
 ### 查看容器运行状态
@@ -123,19 +126,23 @@ docker-compose ps
 系统会为每个代理节点分配一个独立的端口，端口号从 `START_PORT` 开始递增。您可以通过 API 接口获取当前可用的代理节点及其对应的端口号。
 
 使用示例：
+```
+   proxy_name = proxy['proxy']
+   port = proxy['port']
+   proxy_url = f"{username}:{password}@{config.PROXY_IP}:{port}"
+   proxies = {
+      "http": http://proxy_url,
+      "https": https://proxy_url,
+      "socks5": socks5://proxy_url
+   }
+```
 
-1. **SOCKS5 代理**：
-   - 主机：`your-server-ip`
-   - 端口：`2000X`（根据 API 返回的端口）
-   - 用户名：不需要
-   - 密码：不需要
-
-2. **HTTP 代理**：
-   - 主机：`your-server-ip`
-   - 端口：`2000X`（根据 API 返回的端口）
-   - 用户名：不需要
-   - 密码：不需要
-
+测试连接：
+```
+curl -x {username}:{password}@{config.PROXY_IP}:{port} https://api.ipify.org?format=json
+```
+密码中如果使用了特殊字符，需要进行 URL 编码。比如@需要转码为%40
+（密码123@456 需要转码为 123%40456）
 ### Clash Meta 控制面板
 
 Clash Meta 提供了一个 Web UI 控制面板，可以查看代理状态、切换节点等：
@@ -144,7 +151,9 @@ Clash Meta 提供了一个 Web UI 控制面板，可以查看代理状态、切�
 http://your-server-ip:19999/ui
 ```
 
-访问时需要输入在 `.env` 文件中设置的 `CLASH_META_SECRET` 值。
+访问时需要输入
+1、http://服务器地址:19999
+2、在 `.env` 文件中设置的 `CLASH_META_SECRET` 值。
 
 ## 配置说明
 
