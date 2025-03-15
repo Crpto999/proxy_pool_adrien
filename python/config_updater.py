@@ -76,7 +76,12 @@ def generate_config_multi():
             "global-client-fingerprint": "random",
             "secret": SECRET,
             "authentication": [QuotedString(f"{USERNAME}:{PASSWORD}")],
-            "skip-auth-prefixes": ["127.0.0.1/8", "172.168.10.0/24", "124.70.139.101/32", "172.17.0.0/16"],
+            "skip-auth-prefixes": [
+                "127.0.0.1/8",     # 本地回环网络
+                "10.0.0.0/8",       # 私有网络A类
+                "172.16.0.0/12",    # 私有网络B类(包含所有可能的Docker网段)
+                "192.168.0.0/16",   # 私有网络C类
+            ],
             "profile": {
                 "store-selected": True,
                 "store-fake-ip": True
