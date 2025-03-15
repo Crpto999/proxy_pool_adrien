@@ -1,0 +1,17 @@
+name: proxy_pool_adrien
+
+services:
+  proxy_pool:
+    build: .
+    container_name: proxy_pool_adrien
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "19999:19999"        # UI面板 端口
+      - "20000:20000"        # API 端口
+      - "20001-20050:20001-20050"  # 多端口代理
+    volumes:
+      - ./python:/app/python
+      - ./mihomo/config:/app/mihomo/config  # 映射配置目录
+      - ./mihomo/ui:/app/mihomo/ui  # 映射配置目录
